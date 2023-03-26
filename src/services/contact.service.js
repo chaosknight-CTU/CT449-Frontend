@@ -1,41 +1,35 @@
 import createApiClient from "./api.service";
 
 class ContactService {
-    constructor(baseUrl = "/api/contact") {
-        this.api = createApiClient(baseUrl);
+  constructor(baseUrl = "http://localhost:3000/api/contacts") {
+    this.api = createApiClient(baseUrl);
+  }
 
-    }
+  async getALL() {
+    const { data } = await this.api.get("/");
 
-    async getALL() {
-        return (await this.api.get("/")).data;
+    return data;
+  }
 
-    }
+  async create(data) {
+    return (await this.api.post("/", data)).data;
+  }
 
-    async create(data) {
-        return (await this.api.post("/", data)).data;
+  async deleteALL() {
+    return (await this.api.delete("/")).data;
+  }
 
-    }
+  async get(id) {
+    return (await this.api.get(`/${id}`)).data;
+  }
 
-    async deletaALL() {
-        return (await this.api.delete("/")).data;
-        
-    }
+  async update(id, data) {
+    return (await this.api.put(`/${id}`, data)).data;
+  }
 
-    async get(id) {
-        return (await this.api.get(`/${id}`)).data;
-
-    }
-
-    async update(id, data) {
-        return (await this.api.put(`/${id}`, data)).data;
-
-    }
-
-    async delete(id) {
-        return (await this.api.delete(`/${id}`)).data;
-
-    }
-
+  async delete(id) {
+    return (await this.api.delete(`/${id}`)).data;
+  }
 }
 
 export default new ContactService();
